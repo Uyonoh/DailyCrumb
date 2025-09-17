@@ -1,23 +1,25 @@
-import Image from "next/image";
-interface ProductProp {
-    img: string;
-    name: string;
-    brief: string;
-};
+"use client";
 
-function Product(product: ProductProp) {
+import Image from "next/image";
+import { useRouter } from "next/navigation";
+import type { ProductProp } from "@/app/services/products";
+
+function Product({slug, img, name, brief}: ProductProp) {
+    const router = useRouter()
+    slug = name;
     return (
-        <div className="card">
+        <div className="card cursor-pointer" onClick={() => router.push(`/browse/${slug}`)}>
             <div className="">
-                <Image className="rounded-sm  @[480px]:rounded-lg" src={product.img}
-                alt="product" width={300} height={300} />
+                <Image className="rounded-sm  @[480px]:rounded-lg" src={img}
+                    alt="product" width={300} height={300} />
             </div>
-            <div>
-                <p className="text-normal font-normal leading-normal">{product.name}</p>
-                <p className="text-[#9a734c] text-sm font-normal leading-normal">{product.brief}</p>
+            <div className="py-2">
+                <p className="text-normal font-medium leading-normal">{name}</p>
+                <p className="text-[#9a734c] text-sm font-normal leading-normal">{brief}</p>
             </div>
         </div>
     )
 }
 
-export default Product;
+export {Product};
+export type {ProductProp};
